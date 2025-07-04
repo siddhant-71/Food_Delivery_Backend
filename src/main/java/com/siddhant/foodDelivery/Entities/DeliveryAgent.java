@@ -23,7 +23,11 @@ public class DeliveryAgent {
     private String email;
     private String password;
     private double rating;
+    private boolean availability;
+    private boolean blocked;
     private String image;
+    private long ratingCount;
+    private Order currentOrder;
     @OneToMany(mappedBy = "deliveryAgent")
     private List<Order> orders;
 }

@@ -10,19 +10,19 @@ import java.util.Optional;
 public interface UserService {
     //CRUD
     User registerUser(User user);
-    User updateUser(User user);
+    User updateUser(long userId,User newUser);
     void deleteUser(User user);
     List<User> getAllUsers();
-    Optional<User> getUserById(long Id);
+    User getUserById(long Id);
 
     //FIND
-    Optional<User> getUserByEmail(String email);
-    Optional<User> getUserByPhone(String phone);
+    User getUserByEmail(String email);
+    User getUserByPhone(String phone);
     List<User> getUsersByRole(String role);
 
 
     //AUTHENTICATION
-    User authenticatedUser(String email, String password);
+    User authenticateUser(String email, String password);
     void changePassword(String email, String oldPassword, String newPassword);
     void resetPassword(String email);
     boolean existsByEmail(String email);

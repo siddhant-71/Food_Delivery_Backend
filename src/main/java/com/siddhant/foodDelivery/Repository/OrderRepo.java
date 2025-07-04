@@ -3,6 +3,7 @@ package com.siddhant.foodDelivery.Repository;
 import com.siddhant.foodDelivery.Entities.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
     List<Order> findAllByDeliveryAddressPincode(String pincode);
     List<Order> findAllByOrderTimeBetween(LocalDateTime start, LocalDateTime end);
     List<Order> findAllByDeliveryTimeBetween(LocalDateTime start, LocalDateTime end);
+    List<Order> findAllByOrderDate(LocalDate start, LocalDate end);
     List<Order> findAllByStatus(String status);
     List<Order> findAllByPaymentMode(String paymentMode);
     List<Order> findAllByPaymentModeAndUserId(String paymentMode,long userId);

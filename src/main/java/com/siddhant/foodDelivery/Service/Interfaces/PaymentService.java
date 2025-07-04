@@ -18,7 +18,7 @@ public interface PaymentService {
 
 
     List<Payment> getAllPaymentsForUser(long UserId);
-    List<Payment> getAllPaymentsForOrder(long OrderId);
+    Payment getPaymentForOrder(long OrderId);
     //Payment Status
     boolean isPaymentCompleted(long paymentId);
     void updatePaymentStatus(long paymentId,String status);

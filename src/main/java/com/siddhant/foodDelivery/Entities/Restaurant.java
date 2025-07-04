@@ -20,10 +20,11 @@ public class Restaurant {
     @GeneratedValue
     private long id;
     private String name;
-    private String location;
+    private String area;
     private String city;
     private String state;
     private double rating;
+    private int ratingCount;
     private String image;
 
     @OneToMany(mappedBy = "restaurant")

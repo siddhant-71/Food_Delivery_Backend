@@ -13,6 +13,6 @@ public interface MenuService {
 
     Dish addDishToMenu(long menuId, Dish dish);
     void deleteDishFromMenu(long menuId, Dish dish);
-    Dish updateDishFromMenu(long menuId, Dish updatedDish);
+    Dish updateDishFromMenu(long menuId, Dish updatedDish,long dishId);
     List<Dish> getDishesByMenuId(long menuId);
 }

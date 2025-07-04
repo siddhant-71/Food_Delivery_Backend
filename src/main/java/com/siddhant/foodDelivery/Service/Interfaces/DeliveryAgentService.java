@@ -17,7 +17,7 @@ public interface DeliveryAgentService {
     //SEATCH
     List<DeliveryAgent> searchDeliveryAgentsByName(String name);
     List<DeliveryAgent> searchDeliveryAgentsByRatingRange(double start, double end);
-    Optional<DeliveryAgent> getDeliveryAgentByPhone(String phone);
+    DeliveryAgent getDeliveryAgentByPhone(String phone);
 
 
     //ASSIGNMENT
@@ -30,7 +30,7 @@ public interface DeliveryAgentService {
     //AVAIBILITY
 
     boolean isDeliveryAgentAvailable(long deliveryAgentId);
-    void setDeliveryAgentAvailability(long deliveryAgentId,boolean availability);
+    //void setDeliveryAgentAvailability(long deliveryAgentId,boolean availability);
     List<DeliveryAgent> getAvailableDeliveryAgents();
     List<DeliveryAgent> getUnavailableDeliveryAgents();
 

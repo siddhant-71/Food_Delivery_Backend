@@ -41,7 +41,8 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "dish_id")
     )
     private List<Dish> dishes;
-
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
     @ManyToOne
     @JoinColumn(name = "delivery_agent_id")
     private DeliveryAgent deliveryAgent;

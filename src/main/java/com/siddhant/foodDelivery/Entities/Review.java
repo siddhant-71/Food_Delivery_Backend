@@ -21,7 +21,7 @@ public class Review {
     private String comment;
     private Integer rating;
     private LocalDateTime reviewDate;
-
+    private String status;
     @OneToOne
     @JoinColumn(name = "order_id")
     private Order order;

@@ -20,4 +20,5 @@ public interface PaymentRepo extends JpaRepository<Payment, Long> {
     List<Payment> findAllByOrderDeliveryTimeBetween(LocalDateTime start, LocalDateTime end);
     List<Payment> findAllByOrderStatus(String status);
     Optional<Payment> findByOrderRestaurantName(String name);
+    List<Payment> findAllByOrderUserId(long userId);
 }

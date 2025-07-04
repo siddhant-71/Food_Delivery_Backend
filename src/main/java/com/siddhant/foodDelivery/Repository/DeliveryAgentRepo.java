@@ -12,4 +12,5 @@ public interface DeliveryAgentRepo extends JpaRepository<DeliveryAgent, Long> {
     boolean existsByPhone(String phone);
     List<DeliveryAgent> findAllByName(String name);
     List<DeliveryAgent> findAllByRating(double rating);
+    long countAllByAvailability(boolean availability);
 }

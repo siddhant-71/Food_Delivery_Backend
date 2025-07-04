@@ -8,11 +8,11 @@ public interface CartService {
     Cart getCartByUserId(long UserId);
     void clearCart(long cartId);
 
-    Cart AddDishToCart(long userId,long DishId,int quantity);
+    Cart addDishToCart(long userId,long DishId,int quantity);
     Cart removeDishFromCart(long userID,long DishId);
 
-    double CalculateTotalCartValueByUser(long UserId);
-    int TotalCartItemsByUserid(long userId);
+    double calculateTotalCartValueByUser(long UserId);
+    int totalCartItemsByUserid(long userId);
 
 
 }

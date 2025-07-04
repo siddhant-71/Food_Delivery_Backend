@@ -10,7 +10,7 @@ public interface RestaurantService {
 
     //CRUD
     Restaurant registerRestaurant(Restaurant restaurant);
-    Restaurant updateRestaurant(Restaurant restaurant);
+    Restaurant updateRestaurant(long Id,Restaurant restaurant);
     void deleteRestaurant(Restaurant restaurant);
     List<Restaurant> getAllRestaurants();
     Restaurant getRestaurantById(long id);

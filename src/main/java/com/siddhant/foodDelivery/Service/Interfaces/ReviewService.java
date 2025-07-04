@@ -3,6 +3,7 @@ package com.siddhant.foodDelivery.Service.Interfaces;
 import com.siddhant.foodDelivery.Entities.Review;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReviewService {
@@ -20,7 +21,7 @@ public interface ReviewService {
     List<Review> searchReviewsByOrderId(long orderId);
     List<Review> searchReviewsByRestaurantId(long restaurantId);
     List<Review> searchReviewsByRestaurantName(String name);
-    List<Review> searchReviewsByDateRange(LocalDate start, LocalDate end);
+    List<Review> searchReviewsByDateRange(LocalDateTime start, LocalDateTime end);
 
 
     long countReviewsForRestaurant(Long restaurantId);

@@ -29,6 +29,7 @@ public class User {
 
     private String role;
 
+    private Address primaryAddress;
     @OneToMany(mappedBy = "user")
     private List<Address> addresses;
 
