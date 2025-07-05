@@ -4,6 +4,8 @@ import com.siddhant.foodDelivery.DTOs.OrderRequest;
 import com.siddhant.foodDelivery.Entities.Dish;
 import com.siddhant.foodDelivery.Entities.Order;
 import com.siddhant.foodDelivery.Entities.User;
+import com.siddhant.foodDelivery.Enums.OrderStatus;
+import com.siddhant.foodDelivery.Enums.PaymentMode;
 import com.siddhant.foodDelivery.Exceptions.AddressExceptions.AddressNotFoundException;
 import com.siddhant.foodDelivery.Exceptions.OrderExceptions.OrderNotFoundException;
 import com.siddhant.foodDelivery.Exceptions.RestaurantExceptions.RestaurantNotFoundException;
@@ -47,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
         if(orderRequest==null)throw new NullPointerException("Order Request is null");
         Order order=new Order();
         order.setOrderTime(LocalDateTime.now());
-        order.setStatus("Placed");
+        order.setStatus(OrderStatus.CONFIRMED);
         order.setPaymentMethod(orderRequest.getPaymentMode());
         order.setTotalAmount(orderRequest.getTotalAmount());
         order.setRestaurant(restaurantRepo.findById(orderRequest.getRestaurantId()).orElseThrow(()->new RestaurantNotFoundException("Restaurant with id "+orderRequest.getRestaurantId()+" not found")));
@@ -79,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void updateOrderStatus(long orderId, String status) {
+    public void updateOrderStatus(long orderId, OrderStatus status) {
         Order order=orderRepo.findById(orderId).orElseThrow(()->new OrderNotFoundException("Order with id "+orderId+" not found"));
         order.setStatus(status);
         orderRepo.save(order);
@@ -89,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String getOrderStatus(long orderId) {
         Order order=orderRepo.findById(orderId).orElseThrow(()->new OrderNotFoundException("Order with id "+orderId+" not found"));
-        return order.getStatus();
+        return order.getStatus().toString();
     }
 
     @Override
@@ -105,17 +107,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderByStatus(String status) {
+    public List<Order> getOrderByStatus(OrderStatus status) {
         if(orderRepo.findAllByStatus(status).isEmpty())logger.info("No Orders found with status {}",status);
         else logger.info("Found {} Orders with status {}",orderRepo.findAllByStatus(status).size(),status);
         return orderRepo.findAllByStatus(status);
     }
 
     @Override
-    public List<Order> getOrderByDateRange(LocalDate start, LocalDate end) {
-        if(orderRepo.findAllByOrderDate(start,end).isEmpty())logger.info("No Orders found between {} and {}",start,end);
-        else logger.info("Found {} Orders between {} and {}",orderRepo.findAllByOrderDate(start,end).size(),start,end);
-        return orderRepo.findAllByOrderDate(start,end);
+    public List<Order> getOrderByDateRange(LocalDateTime start, LocalDateTime end) {
+        if(orderRepo.findAllByOrderTimeBetween(start,end).isEmpty())logger.info("No Orders found between {} and {}",start,end);
+        else logger.info("Found {} Orders between {} and {}",orderRepo.findAllByOrderTimeBetween(start,end).size(),start,end);
+        return orderRepo.findAllByOrderTimeBetween(start,end);
     }
 
     @Override
@@ -141,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public long countOrdersByStatus(String status) {
+    public long countOrdersByStatus(OrderStatus status) {
         logger.info("Total Orders with status {} are {}",status,orderRepo.findAllByStatus(status).size());
         return orderRepo.findAllByStatus(status).size();
     }

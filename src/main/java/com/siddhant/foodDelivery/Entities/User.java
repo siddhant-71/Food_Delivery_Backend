@@ -1,5 +1,6 @@
 package com.siddhant.foodDelivery.Entities;
 
+import com.siddhant.foodDelivery.Enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,8 +28,10 @@ public class User {
 
     private String phone;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
+    @OneToOne(mappedBy = "user")
     private Address primaryAddress;
     @OneToMany(mappedBy = "user")
     private List<Address> addresses;

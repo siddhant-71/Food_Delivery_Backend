@@ -1,5 +1,6 @@
 package com.siddhant.foodDelivery.Service.Implementations;
 
+import com.siddhant.foodDelivery.Enums.UserRole;
 import com.siddhant.foodDelivery.Exceptions.CartExceptions.CartNotFoundException;
 import com.siddhant.foodDelivery.Exceptions.DishExceptions.DishNotFoundException;
 import com.siddhant.foodDelivery.Exceptions.UserException.PasswordMismatchException;
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersByRole(String role) {
+    public List<User> getUsersByRole(UserRole role) {
         List<User> users=userRepo.findAllByRole(role);
         if(!users.isEmpty())return users;
         logger.info("No users found with role {}",role);
@@ -181,6 +182,7 @@ public class UserServiceImpl implements UserService {
     public void clearUserCart(long userId) {
         User user = userRepo.findById(userId).orElseThrow(() -> new UserNotFoundException("User with the id " + userId + " not found"));
         user.getCart().setDishes(List.of());
+        cartRepo.save(user.getCart());
     }
 
     @Override

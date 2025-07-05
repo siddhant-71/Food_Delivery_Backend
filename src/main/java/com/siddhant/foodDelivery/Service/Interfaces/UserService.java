@@ -3,6 +3,7 @@ package com.siddhant.foodDelivery.Service.Interfaces;
 import com.siddhant.foodDelivery.Entities.Cart;
 import com.siddhant.foodDelivery.Entities.Order;
 import com.siddhant.foodDelivery.Entities.User;
+import com.siddhant.foodDelivery.Enums.UserRole;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,7 @@ public interface UserService {
     //FIND
     User getUserByEmail(String email);
     User getUserByPhone(String phone);
-    List<User> getUsersByRole(String role);
+    List<User> getUsersByRole(UserRole role);
 
 
     //AUTHENTICATION

@@ -25,8 +25,14 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address addAddressForUser(long userId, Address address) {
         User user=userRepo.findById(userId).orElseThrow(()->new UserNotFoundException("User Not Found"));
+        if(address==null)throw new NullPointerException("Address is null");
         address.setUser(user);
         addressRepo.save(address);
+        if(user.getAddresses()==null){
+            user.setAddresses(List.of(address));
+            if(user.getAddresses().size()==1)user.setPrimaryAddress(address);
+            return address;
+        }
         user.getAddresses().add(address);
         if(user.getAddresses().size()==1)user.setPrimaryAddress(address);
         userRepo.save(user);

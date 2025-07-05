@@ -2,8 +2,10 @@ package com.siddhant.foodDelivery.Service.Interfaces;
 
 import com.siddhant.foodDelivery.DTOs.OrderRequest;
 import com.siddhant.foodDelivery.Entities.Order;
+import com.siddhant.foodDelivery.Enums.OrderStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,16 +18,16 @@ public interface OrderService {
 
 
 
-    void updateOrderStatus(long OrderId,String status);
+    void updateOrderStatus(long OrderId, OrderStatus status);
     String getOrderStatus(long OrderId);
 
     void assignDeliveryAgent(long orderId,long AgentId);
     void unassignDeliveryAgent(long OrderId,long  AgentId);
 
-    List<Order> getOrderByStatus(String status);
-    List<Order> getOrderByDateRange(LocalDate start, LocalDate end);
+    List<Order> getOrderByStatus(OrderStatus status);
+    List<Order> getOrderByDateRange(LocalDateTime start, LocalDateTime end);
 
     double calculateOrderTotal(long orderId);
     long countTotalOrders();
-    long countOrdersByStatus(String status);
+    long countOrdersByStatus(OrderStatus status);
 }

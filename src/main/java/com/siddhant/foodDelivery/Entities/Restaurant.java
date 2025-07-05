@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "Restaurants")
+@Table(name = "restaurants")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -25,6 +25,8 @@ public class Restaurant {
     private String state;
     private double rating;
     private int ratingCount;
+    private Integer pincode;
+    private String description;
     private String image;
 
     @OneToMany(mappedBy = "restaurant")

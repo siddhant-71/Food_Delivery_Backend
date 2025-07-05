@@ -194,5 +194,3 @@ public class DeliveryAgentServiceImpl implements DeliveryAgentService {
         logger.info("Delivery Agent with id {} unblocked successfully",deliveryAgentId);
     }
 }
-
-//long countAllByAvailability(boolean availability); inserted this inside repo

@@ -5,6 +5,7 @@ import com.siddhant.foodDelivery.Entities.Review;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewService {
     //Crud
@@ -18,7 +19,7 @@ public interface ReviewService {
     //SEARCH
     List<Review> searchReviewsByRating(int rating);
     List<Review> searchReviewsByUserId(long UserId);
-    List<Review> searchReviewsByOrderId(long orderId);
+    Review searchReviewsByOrderId(long orderId);
     List<Review> searchReviewsByRestaurantId(long restaurantId);
     List<Review> searchReviewsByRestaurantName(String name);
     List<Review> searchReviewsByDateRange(LocalDateTime start, LocalDateTime end);

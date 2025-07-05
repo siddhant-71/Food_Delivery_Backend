@@ -1,5 +1,6 @@
 package com.siddhant.foodDelivery.Entities;
 
+import com.siddhant.foodDelivery.Enums.ReviewStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,8 @@ public class Review {
     private String comment;
     private Integer rating;
     private LocalDateTime reviewDate;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ReviewStatus status;
     @OneToOne
     @JoinColumn(name = "order_id")
     private Order order;

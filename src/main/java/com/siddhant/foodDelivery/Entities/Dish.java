@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "dishes")
 @Data
@@ -25,4 +27,6 @@ public class Dish {
     @ManyToOne
     @JoinColumn(name = "menu_id")
     private Menu menu;
+    @OneToMany(mappedBy = "dish")
+    private List<Review> reviews;
 }

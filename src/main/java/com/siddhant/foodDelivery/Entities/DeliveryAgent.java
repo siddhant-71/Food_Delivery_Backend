@@ -27,6 +27,7 @@ public class DeliveryAgent {
     private boolean blocked;
     private String image;
     private long ratingCount;
+    @OneToOne(mappedBy = "deliveryAgent")
     private Order currentOrder;
     @OneToMany(mappedBy = "deliveryAgent")
     private List<Order> orders;

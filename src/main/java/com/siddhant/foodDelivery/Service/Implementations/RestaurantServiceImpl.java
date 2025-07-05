@@ -39,6 +39,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         if(restaurant.getCity()!=null)oldRestaurant.setCity(restaurant.getCity());
         if(restaurant.getState()!=null)oldRestaurant.setState(restaurant.getState());
         if(restaurant.getImage()!=null)oldRestaurant.setImage(restaurant.getImage());
+        if(restaurant.getPincode()!=null)oldRestaurant.setPincode(restaurant.getPincode());
+        if(restaurant.getDescription()!=null)oldRestaurant.setDescription(restaurant.getDescription());
         restaurantRepo.save(oldRestaurant);
         logger.info("Restaurant with id {} updated successfully",id);
         return oldRestaurant;

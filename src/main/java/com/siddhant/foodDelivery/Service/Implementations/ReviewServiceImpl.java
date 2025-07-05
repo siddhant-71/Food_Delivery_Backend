@@ -3,6 +3,7 @@ package com.siddhant.foodDelivery.Service.Implementations;
 import com.siddhant.foodDelivery.Entities.Order;
 import com.siddhant.foodDelivery.Entities.Restaurant;
 import com.siddhant.foodDelivery.Entities.Review;
+import com.siddhant.foodDelivery.Enums.ReviewStatus;
 import com.siddhant.foodDelivery.Exceptions.RestaurantExceptions.RestaurantNotFoundException;
 import com.siddhant.foodDelivery.Exceptions.ReviewExceptions.ReviewNotFoundException;
 import com.siddhant.foodDelivery.Repository.OrderRepo;
@@ -45,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
         if(review.getComment()!=null)reviewToUpdate.setComment(review.getComment());
         if(review.getRating()!=null)reviewToUpdate.setRating(review.getRating());
         reviewToUpdate.setReviewDate(LocalDateTime.now());
-        reviewToUpdate.setStatus("PENDING");
+        reviewToUpdate.setStatus(ReviewStatus.APPROVED);
         reviewRepo.save(reviewToUpdate);
         logger.info("Review with id {} updated successfully",ReviewId);
     }
@@ -78,8 +79,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> searchReviewsByOrderId(long orderId) {
-        return reviewRepo.findAllByOrderId(orderId);
+    public Review searchReviewsByOrderId(long orderId) {
+        return reviewRepo.findByOrderId(orderId).orElseThrow(()->new ReviewNotFoundException("Review for order with id "+orderId+" not found"));
     }
 
     @Override
@@ -91,7 +92,7 @@ public class ReviewServiceImpl implements ReviewService {
         }
         List<Review>ans=new ArrayList<>();
         for(Order order:orders){
-            ans.addAll(reviewRepo.findAllByOrderId(order.getId()));
+            reviewRepo.findByOrderId(order.getId()).ifPresent(ans::add);
         }
         if(ans.isEmpty()){
             logger.warn("No reviews found for restaurant with id {}",restaurantId);
@@ -126,7 +127,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional
     public void approveReview(long reviewId) {
         Review review=reviewRepo.findById(reviewId).orElseThrow(()->new ReviewNotFoundException("Review with review id "+reviewId+" not found"));
-        review.setStatus("APPROVED");
+        review.setStatus(ReviewStatus.APPROVED);
         logger.info("Review with id {} approved successfully",reviewId);
         reviewRepo.save(review);
         return ;
@@ -135,23 +136,23 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void rejectReview(long reviewId) {
         Review review=reviewRepo.findById(reviewId).orElseThrow(()->new ReviewNotFoundException("Review with review id "+reviewId+" not found"));
-        review.setStatus("REJECTED");
+        review.setStatus(ReviewStatus.REJECTED);
         logger.info("Review with id {} rejected successfully",reviewId);
         reviewRepo.save(review);
     }
 
     @Override
     public List<Review> getAllPendingReviews() {
-        return reviewRepo.findAllByStatus("PENDING");
+        return reviewRepo.findAllByStatus(ReviewStatus.PENDING);
     }
 
     @Override
     public List<Review> getAllApprovedReviews() {
-        return reviewRepo.findAllByStatus("APPROVED");
+        return reviewRepo.findAllByStatus(ReviewStatus.APPROVED);
     }
 
     @Override
     public List<Review> getAllRejectedReviews() {
-        return reviewRepo.findAllByStatus("REJECTED");
+        return reviewRepo.findAllByStatus(ReviewStatus.REJECTED);
     }
 }

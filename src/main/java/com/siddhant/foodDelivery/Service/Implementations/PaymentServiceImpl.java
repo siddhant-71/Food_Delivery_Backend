@@ -4,6 +4,8 @@ import com.siddhant.foodDelivery.DTOs.PaymentRequest;
 import com.siddhant.foodDelivery.DTOs.PaymentResponse;
 import com.siddhant.foodDelivery.Entities.Order;
 import com.siddhant.foodDelivery.Entities.Payment;
+import com.siddhant.foodDelivery.Enums.PaymentMode;
+import com.siddhant.foodDelivery.Enums.PaymentStatus;
 import com.siddhant.foodDelivery.Exceptions.OrderExceptions.OrderNotFoundException;
 import com.siddhant.foodDelivery.Exceptions.PaymentExceptions.PaymentNotFoundException;
 import com.siddhant.foodDelivery.Repository.OrderRepo;
@@ -35,7 +37,7 @@ public class PaymentServiceImpl implements PaymentService {
         Order order=orderRepo.findById(orderId).orElseThrow(()->new OrderNotFoundException("Order with id "+orderId+" not found"));
         Payment payment=new Payment();
         payment.setPaymentMode(paymentRequest.getPaymentMethod());
-        payment.setStatus("PENDING");
+        payment.setStatus(PaymentStatus.PENDING);
         payment.setAmount(paymentRequest.getAmount());
         payment.setOrder(order);
         paymentRepo.save(payment);
@@ -54,13 +56,13 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment completePayment(long paymentId, PaymentResponse paymentResponse) {
         Payment payment=paymentRepo.findById(paymentId).orElseThrow(()->new PaymentNotFoundException("Payment with id "+paymentId+" not found"));
         if(paymentResponse.getTransactionId()==null) {
-            payment.setStatus("FAILED");
+            payment.setStatus(PaymentStatus.FAILED);
             paymentRepo.save(payment);
             logger.warn("Transaction failed for payment with id {}",paymentId);
             return payment;
         }
         payment.setTransactionId(paymentResponse.getTransactionId());
-        payment.setStatus("COMPLETED");
+        payment.setStatus(PaymentStatus.SUCCESS);
         paymentRepo.save(payment);
         logger.info("Payment with id {} completed successfully",paymentId);
         return payment;
@@ -92,11 +94,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public boolean isPaymentCompleted(long paymentId) {
         Payment payment=paymentRepo.findById(paymentId).orElseThrow(()->new PaymentNotFoundException("Payment with id "+paymentId+" not found"));
-        return "COMPLETED".equals(payment.getStatus());
+        return PaymentStatus.SUCCESS.equals(payment.getStatus());
     }
 
     @Override
-    public void updatePaymentStatus(long paymentId, String status) {
+    public void updatePaymentStatus(long paymentId, PaymentStatus status) {
         Payment payment=paymentRepo.findById(paymentId).orElseThrow(()->new PaymentNotFoundException("Payment with id "+paymentId+" not found"));
         payment.setStatus(status);
         paymentRepo.save(payment);
@@ -104,7 +106,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public String getPaymentStatus(long paymentId) {
+    public PaymentStatus getPaymentStatus(long paymentId) {
         Payment payment=paymentRepo.findById(paymentId).orElseThrow(()->new PaymentNotFoundException("Payment with id "+paymentId+" not found"));
         return payment.getStatus();
     }

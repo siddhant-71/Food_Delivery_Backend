@@ -3,6 +3,7 @@ package com.siddhant.foodDelivery.Service.Interfaces;
 import com.siddhant.foodDelivery.DTOs.PaymentRequest;
 import com.siddhant.foodDelivery.DTOs.PaymentResponse;
 import com.siddhant.foodDelivery.Entities.Payment;
+import com.siddhant.foodDelivery.Enums.PaymentStatus;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public interface PaymentService {
     Payment getPaymentForOrder(long OrderId);
     //Payment Status
     boolean isPaymentCompleted(long paymentId);
-    void updatePaymentStatus(long paymentId,String status);
-    String getPaymentStatus(long paymentId);
+    void updatePaymentStatus(long paymentId, PaymentStatus status);
+    PaymentStatus getPaymentStatus(long paymentId);
 }

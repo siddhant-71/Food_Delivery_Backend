@@ -56,7 +56,9 @@ public class CartServiceImpl implements CartService {
     @Override
     public void clearCart(long cartId) {
         Cart cart=cartRepo.findById(cartId).orElseThrow(()->new CartNotFoundException("Cart with the id "+cartId+" not found"));
-        cart.setDishes(List.of());
+        if(cart.getDishes()==null)
+            logger.info("Cart with id {} is empty",cartId);
+        else cart.setDishes(List.of());
         cartRepo.save(cart);
     }
 

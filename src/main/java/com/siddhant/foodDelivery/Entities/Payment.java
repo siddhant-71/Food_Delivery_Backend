@@ -1,5 +1,7 @@
 package com.siddhant.foodDelivery.Entities;
 
+import com.siddhant.foodDelivery.Enums.PaymentMode;
+import com.siddhant.foodDelivery.Enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +18,10 @@ public class Payment {
     @Id
     @GeneratedValue
     private long id;
-    private String paymentMode;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private PaymentMode paymentMode;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
     private String transactionId;
     private double amount;
     @OneToOne
