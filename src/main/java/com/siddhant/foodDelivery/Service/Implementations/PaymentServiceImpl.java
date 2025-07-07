@@ -47,6 +47,9 @@ public class PaymentServiceImpl implements PaymentService {
         return payment;
     }
 
+    public List<Payment> getAllPayments(){
+        return paymentRepo.findAll();
+    }
     @Override
     public Payment getPaymentByPaymentId(long paymentId) {
         return paymentRepo.findById(paymentId).orElseThrow(()->new PaymentNotFoundException("Payment with id "+paymentId+" not found"));

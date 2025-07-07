@@ -20,7 +20,7 @@ import java.util.List;
 @Builder
 public class Order {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private LocalDateTime orderTime;
     private LocalDateTime deliveryTime;

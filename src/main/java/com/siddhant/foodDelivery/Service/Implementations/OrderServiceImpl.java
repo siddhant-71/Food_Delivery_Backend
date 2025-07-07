@@ -43,6 +43,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepo orderRepo;
 
+
+    public void savet(Order order){
+        orderRepo.save(order);
+    }
     @Override
     @Transactional
     public Order placeOrder(long userId, OrderRequest orderRequest) {

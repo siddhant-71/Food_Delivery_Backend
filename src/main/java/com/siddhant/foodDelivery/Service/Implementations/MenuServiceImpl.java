@@ -39,6 +39,9 @@ public class MenuServiceImpl implements MenuService {
         return menu;
     }
 
+    public void addd(Menu menu){
+        menuRepo.save(menu);
+    }
     @Override
     public Menu updateMenu(long menuId, Menu menu) {
         Menu oldMenu=menuRepo.findById(menuId).orElseThrow(()->new MenuNotFoundException("Menu with id "+menuId+" not found"));

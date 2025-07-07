@@ -15,7 +15,6 @@ import com.siddhant.foodDelivery.Entities.User;
 import com.siddhant.foodDelivery.Repository.*;
 import com.siddhant.foodDelivery.Service.Interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +37,10 @@ public class UserServiceImpl implements UserService {
     private RestaurantRepo restaurantRepo;
     @Autowired
     private CartRepo cartRepo;
+
+
+
+
     @Override
     public User registerUser(User user) {
         userRepo.save(user);
@@ -46,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(long userId, User newUser) {
-        User oldUser=userRepo.findById(userId).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
+        User oldUser=userRepo.findById(userId).orElseThrow(()-> new UserNotFoundException("User Not Found"));
             if(newUser.getEmail()!=null){
                 oldUser.setEmail(newUser.getEmail());
             }

@@ -1,5 +1,7 @@
 package com.siddhant.foodDelivery;
 
+import com.siddhant.foodDelivery.Entities.User;
+import com.siddhant.foodDelivery.Service.Implementations.UserServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
